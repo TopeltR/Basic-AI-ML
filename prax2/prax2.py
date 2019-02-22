@@ -1,46 +1,10 @@
 from queue import Queue, PriorityQueue
+import time
 
-lava_map1 = [
-	"      **               **      ",
-	"     ***     D        ***      ",
-	"     ***                       ",
-	"                      *****    ",
-	"           ****      ********  ",
-	"           ***          *******",
-	" **                      ******",
-	"*****             ****     *** ",
-	"*****              **          ",
-	"***                            ",
-	"              **         ******",
-	"**            ***       *******",
-	"***                      ***** ",
-	"                               ",
-	"                s              ",
-]
-
-lava_map2 = [
-	"     **********************    ",
-	"   *******   D    **********   ",
-	"   *******                     ",
-	" ****************    **********",
-	"***********          ********  ",
-	"            *******************",
-	" ********    ******************",
-	"********                   ****",
-	"*****       ************       ",
-	"***               *********    ",
-	"*      ******      ************",
-	"*****************       *******",
-	"***      ****            ***** ",
-	"                               ",
-	"                s              ",
-]
 start_row = 2
 start_col = 2
 start = (start_col, start_row)
-goal = (598, 595)
 
-start = (2, 2)
 goal_300 = (295, 257)
 goal_600 = (598, 595)
 goal_900 = (898, 895)
@@ -85,6 +49,7 @@ def h(next, goal):
 
 
 def greedy(lava_map, start, goal):
+	start_time = time.time()
 	card = read_map(lava_map)
 	map = [list(row) for row in card]
 	frontier = PriorityQueue()
@@ -105,19 +70,22 @@ def greedy(lava_map, start, goal):
 		current = came_from[current]
 
 	path.reverse()
-	print(len(path))
+	end_time = time.time()
+	print("greedy: " + str(len(path)))
+	time_taken = (end_time - start_time) % 60
+	print("time taken: " + str(round(time_taken, 2)))
 	return path
 
 
 def astar(lava_map, start, goal):
+	start_time = time.time()
 	card = read_map(lava_map)
 	map = [list(row) for row in card]
 	frontier = PriorityQueue()
 	frontier.put((0, start))
 	came_from = {start: None}
 
-	cost_so_far = {}
-	cost_so_far[start] = 0
+	cost_so_far = {start: 0}
 
 	while not frontier.empty():
 		_, current = frontier.get()
@@ -136,11 +104,13 @@ def astar(lava_map, start, goal):
 		current = came_from[current]
 
 	path.reverse()
-	print(len(path))
+	end_time = time.time()
+	print("astar: " + str(len(path)))
+	time_taken = (end_time - start_time) % 60
+	print("time taken: " + str(round(time_taken, 2)))
 	return path
 
 
-# minu_otsing(lava_map2, start)
 greedy("cave300x300", start, goal_300)
 astar("cave300x300", start, goal_300)
 print("\n")
