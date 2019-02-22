@@ -71,7 +71,7 @@ def greedy(lava_map, start, goal):
 
 	path.reverse()
 	end_time = time.time()
-	print("greedy: " + str(len(path)))
+	print("greedy path length: " + str(len(path)))
 	time_taken = (end_time - start_time) % 60
 	print("time taken: " + str(round(time_taken, 2)))
 	return path
@@ -105,7 +105,7 @@ def astar(lava_map, start, goal):
 
 	path.reverse()
 	end_time = time.time()
-	print("astar: " + str(len(path)))
+	print("astar path length: " + str(len(path)))
 	time_taken = (end_time - start_time) % 60
 	print("time taken: " + str(round(time_taken, 2)))
 	return path
